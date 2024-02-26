@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/admin.css">
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <a class="navbar-brand" href="/home"> Weather App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="admin-panel-container">
+        <div class="container">
+            <h1>Welcome to the Admin Panel</h1>
+            <h2>User List</h2>
+            <ul class="admin-user-list">
+                <% users.forEach(user => { %>
+                    <li>
+                        <%= user.username %>
+                        <form action="/admin/delete-user/<%= user._id %>" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                            <button class="delete-btn" type="submit">Delete</button>
+                        </form>
+                        <a class="edit-btn" href="/admin/edit-user/<%= user._id %>">Edit</a>
+                    </li>
+                <% }); %>
+            </ul>
+            <h2>Add New User</h2>
+            <form action="/admin/add-user" method="POST">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <input type="submit" value="Add User">
+            </form>
+        </div>
+    </div>
+
+    <!-- <footer class="fixed-bottom bg-light text-center py-2">
+        <p>Merlenkyzy Nargiz SE-2204</p>
+    </footer> -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script></body>
+</body>
+</html>
