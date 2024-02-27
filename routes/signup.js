@@ -1,4 +1,3 @@
-//signup.js route
 
 
 const express = require('express');

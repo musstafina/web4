@@ -53,7 +53,7 @@ async function loginUser(req, res, next) {
                 req.session.user = {
                     _id: user._id,
                     username: user.username,
-                    isAdmin: user.role === 'admin' 
+                    role: user.role 
                 };
                 
                 if (user.role === 'admin') {

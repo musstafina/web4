@@ -30,7 +30,7 @@ async function createAdmin() {
 
 async function renderAdminPanel(req, res) {
     try {
-        if (!req.session.user || !req.session.user.isAdmin) {
+        if (!req.session.user || !req.session.user.role === 'admin') {
             return res.status(403).send("Forbidden: Only admins can access this page.");
         }
         const users = await User.find();
@@ -44,7 +44,7 @@ async function renderAdminPanel(req, res) {
 async function addUser(req, res) {
     const {username, password } = req.body;
     try {
-        if (!req.session.user || !req.session.user.isAdmin) {
+        if (!req.session.user || !req.session.user.role === 'admin') {
             return res.status(403).send("Forbidden: Only admins can add users.");
         }
         const hashedPassword = await bcrypt.hash(password, saltRounds); 
@@ -70,7 +70,7 @@ async function editUserForm(req, res) {
         if (!user) {
             return res.status(404).send("User not found");
         }
-        if (!req.session.user || !req.session.user.isAdmin) {
+        if (!req.session.user || !req.session.user.role === 'admin') {
             return res.status(403).send("Forbidden: Only admins can edit users.");
         }
         res.render("edit-user", { user });
@@ -84,7 +84,7 @@ async function editUser(req, res) {
     const userId = req.params.userId;
     const { username, password } = req.body;
     try {
-        if (!req.session.user || !req.session.user.isAdmin) {
+        if (!req.session.user || !req.session.user.role === 'admin') {
             return res.status(403).send("Forbidden: Only admins can edit users.");
         }
         const hashedPassword = await bcrypt.hash(password, saltRounds); 
@@ -99,7 +99,7 @@ async function editUser(req, res) {
 async function deleteUser(req, res) {
     const userId = req.params.userId;
     try {
-        if (!req.session.user || !req.session.user.isAdmin) {
+        if (!req.session.user || !req.session.user.role === 'admin') {
             return res.status(403).send("Forbidden: Only admins can delete users.");
         }
         await User.findByIdAndDelete(userId);
@@ -111,7 +111,7 @@ async function deleteUser(req, res) {
 }
 
 module.exports = {
-    // createAdmin,
+    createAdmin,
     renderAdminPanel,
     addUser,
     editUserForm,

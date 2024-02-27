@@ -2,13 +2,15 @@ const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const path = require('path')
-// const { createAdmin } = require('../controllers/adminController'); 
+const { createAdmin } = require('../controllers/adminController'); 
 
 const app = express();
 
 const signupRoute = require('../routes/signup');
 const loginRoute = require('../routes/login');
 const adminRoute = require('../routes/admin');
+const { requireAuth } = require('../middleware/authMiddleware');
+
 
 
 
@@ -16,7 +18,7 @@ const dbUrl = "mongodb+srv://merlenqyzy:microlab99@musstafina.feqeyzq.mongodb.ne
 mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => { 
         console.log('Connected to MongoDB Atlas');
-        // createAdmin(); 
+        createAdmin(); 
     })
     .catch(err => console.error('Error connecting to MongoDB Atlas:', err));
 
@@ -43,7 +45,7 @@ app.use('/signup', signupRoute);
 app.use('/admin', adminRoute);
 
 
-app.get("/home", (req, res) => {
+app.get("/home", requireAuth, (req, res) => {
     res.render("home");
 });
 
