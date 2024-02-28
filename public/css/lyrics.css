@@ -4,15 +4,47 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
+
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
 }
+
+nav {
+    background-color: rgba(124, 62, 62, 0.759);
+}
+
+nav a {
+    color: white;
+}
+
+.navbar-nav .nav-item {
+    margin-right: 80px;
+}
+
+
 h1 {
+    padding-top: 76px;
     text-align: center;
     margin-bottom: 20px;
 }
+
+.submit-btn {
+    width: 5%;
+    padding: 8px;
+    font-size: 16px;
+    background-color: rgba(124, 62, 62, 0.759);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .submit-btn:hover {
+    background-color: rgb(124, 62, 62);
+  }
+
 #searchForm {
     margin-bottom: 20px;
     text-align: center;
@@ -30,29 +62,36 @@ h1 {
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
+
 .result h2 {
     margin: 0 0 10px;
     font-size: 18px;
     color: #333;
 }
+
 .result p {
-    margin: 0;
+    margin-bottom: 10px;
     color: #666;
 }
+
 .getLyrics {
-    padding-top: 5px;
-    padding: 8px 16px;
-    background-color: #007bff;
+    padding: 5px 16px; /* Adjust padding */
+    background-color: rgba(124, 62, 62, 0.759);
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    align-self: flex-start; /* Align to the left */
 }
+
 .getLyrics:hover {
-    background-color: #0056b3;
+    background-color: rgb(124, 62, 62);
 }
+
 .lyrics {
     display: none;
     margin-top: 20px;
@@ -60,6 +99,7 @@ h1 {
     background-color: #f9f9f9;
     border-radius: 8px;
 }
+
 .lyrics p {
     margin: 0;
 }
