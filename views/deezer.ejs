@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deezer Search</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Deezer Search</h1>
+    <form id="searchForm">
+        <input type="text" id="searchQuery" name="query" placeholder="Search for a track...">
+        <button type="submit">Search</button>
+    </form>
+    <div id="searchResults"></div>
+
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').submit(function (event) {
+                event.preventDefault();
+                searchTracks($('#searchQuery').val());
+            });
+
+            function searchTracks(query) {
+                $.get('/deezer/search', { query: query }, function (data) {
+                    displayResults(data);
+                });
+            }
+
+            function displayResults(results) {
+                $('#searchResults').empty();
+                results.forEach(function (track) {
+                    $('#searchResults').append(`<p>${track.title} - ${track.artist} - ${track.album.title} - <img src="${track.album.cover_medium}" alt="Album Cover"></p>`);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
