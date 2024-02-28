@@ -10,6 +10,7 @@ const signupRoute = require('../routes/signup');
 const loginRoute = require('../routes/login');
 const adminRoute = require('../routes/admin');
 const deezerRoutes = require('../routes/deezer');
+const lyricsRoutes = require('../routes/lyrics');
 
 const { requireAuth } = require('../middleware/authMiddleware');
 
@@ -46,6 +47,8 @@ app.use('/', loginRoute);
 app.use('/signup', signupRoute);
 app.use('/admin', adminRoute);
 app.use('/deezer', deezerRoutes);
+app.use('/lyrics', lyricsRoutes
+)
 
 app.get("/home", requireAuth, (req, res) => {
     res.render("home");
