@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/users');
+const Item = require('../models/item');
 
 const saltRounds = 10; 
 
@@ -34,7 +35,9 @@ async function renderAdminPanel(req, res) {
             return res.status(403).send("Forbidden: Only admins can access this page.");
         }
         const users = await User.find();
-        res.render("admin", { users });
+        const items = await Item.find();
+
+        res.render("admin", { users, items });
     } catch (error) {
         console.error("Error rendering admin panel:", error);
         res.status(500).send("An error occurred while rendering admin panel.");
@@ -110,13 +113,89 @@ async function deleteUser(req, res) {
     }
 }
 
+async function addItem(req, res) {
+    try {
+        if (!req.session.user || req.session.user.role !== 'admin') {
+            return res.status(403).send("Forbidden: Only admins can add items.");
+        }
+        const { itemNameEn, itemNameLocalized, itemDescriptionEn, itemDescriptionLocalized, image1, image2, image3 } = req.body;
+
+        const newItem = new Item({
+            itemNameEn,
+            itemNameLocalized,
+            itemDescriptionEn,
+            itemDescriptionLocalized,
+            image1,
+            image2,
+            image3
+        });
+
+        await newItem.save();
+
+        res.redirect('/admin');
+    } catch (error) {
+        console.error('Error adding item:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+
+async function editItem(req, res) {
+    try {
+        if (!req.session.user || req.session.user.role !== 'admin') {
+            return res.status(403).send("Forbidden: Only admins can edit items.");
+        }
+        const itemId = req.params.itemId;
+        const { itemNameEn, itemNameLocalized, itemDescriptionEn, itemDescriptionLocalized, image1, image2, image3 } = req.body;
+
+        const updatedItem = await Item.findByIdAndUpdate(itemId, {
+            itemNameEn,
+            itemNameLocalized,
+            itemDescriptionEn,
+            itemDescriptionLocalized,
+            image1,
+            image2,
+            image3
+        }, { new: true }); 
+
+        
+        res.redirect('/admin');
+    } catch (error) {
+        console.error('Error editing item:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+
+
+async function deleteItem(req, res) {
+    try {
+        if (!req.session.user || req.session.user.role !== 'admin') {
+            return res.status(403).send("Forbidden: Only admins can delete items.");
+        }
+        const itemId = req.params.itemId;
+
+        await Item.findByIdAndDelete(itemId);
+
+        res.redirect('/admin');
+    } catch (error) {
+        console.error('Error deleting item:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+
+
 module.exports = {
     createAdmin,
     renderAdminPanel,
     addUser,
     editUserForm,
     editUser,
-    deleteUser
+    deleteUser,
+    addItem,
+    editItem,
+    deleteItem
 };
 
 

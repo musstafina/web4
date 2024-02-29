@@ -11,6 +11,7 @@ const loginRoute = require('../routes/login');
 const adminRoute = require('../routes/admin');
 const deezerRoutes = require('../routes/deezer');
 const lyricsRoutes = require('../routes/lyrics');
+const Item = require('../models/item');
 
 const { requireAuth } = require('../middleware/authMiddleware');
 
@@ -50,9 +51,21 @@ app.use('/deezer', deezerRoutes);
 app.use('/lyrics', lyricsRoutes
 )
 
-app.get("/home", requireAuth, (req, res) => {
-    res.render("home");
+// app.get("/home", requireAuth, (req, res) => {
+//     res.render("home");
+// });
+
+app.get("/home", requireAuth, async (req, res) => {
+    try {
+        const items = await Item.find();
+        res.render("home", { items });
+    } catch (error) {
+        console.error("Error fetching items:", error);
+        res.status(500).send("An error occurred while fetching items.");
+    }
 });
+
+
 
 app.listen(3000, ()=> {
     console.log(`Server running on port 3000`)

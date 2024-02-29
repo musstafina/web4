@@ -28,32 +28,41 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        History
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/deezer/history">Music History</a>
-                        <a class="dropdown-item" href="/lyrics/history">Lyrics History</a>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Log out</a>
                 </li>
             </ul>
         </div>
     </nav>
-    
-    <div class="container mt-5 d-flex align-items-center justify-content-center">
-        <div class="weather-container">
-            <form action="/weather" method="post" class="mb-4 text-center">
-                <div class="form-group">
-                    <label for="cityName" class="mb-4">Enter City:</label>
-                    <input type="text" id="cityName" name="cityName" class="form-control" required>
+
+
+ 
+    <div class="container">
+        <h1>Welcome to the Home Page</h1>
+        
+        <div class="item-container">
+            <% items.forEach(item => { %>
+                <div class="item-block">
+                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="<%= item.image1 %>" class="d-block w-100" alt="Image 1">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="<%= item.image2 %>" class="d-block w-100" alt="Image 2">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="<%= item.image3 %>" class="d-block w-100" alt="Image 3">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <h2><%= item.itemNameEn %></h2>
+                    <p><%= item.itemDescriptionEn %></p>
+                    <h2><%= item.itemNameLocalized %></h2>
+                    <p><%= item.itemDescriptionLocalized %></p>
                 </div>
-                <button type="submit" class="btn btn-danger rounded-pill ">Get Weather</button>
-            </form>
-            <div id="weatherInfo" class="row"></div>
+            <% }); %>
         </div>
     </div>
 

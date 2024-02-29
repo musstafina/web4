@@ -120,6 +120,16 @@ input[type="submit"]:hover {
     background-color: #e74c3c;
 }
 
+
+
+.item-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+
+
 @media (max-width: 768px) {
     .container {
         padding: 10px;
